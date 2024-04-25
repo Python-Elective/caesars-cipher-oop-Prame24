@@ -116,6 +116,19 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
+        def build_shift_dict(self, shift)
+            dict = {}
+            len_l = len(string.ascii_lowercase)
+            len_u = len(string.ascii_uppercase)
+            lower = string.ascii_lowercase
+            upper = string.ascii_uppercase
+            # print(string.ascii_lowercase)
+            # print(string.ascii_uppercase)
+            
+            for i in range(len_l):
+                dict[lower[i]] = lower[i + shift]
+            print(dict)
+        #repeat for UPPERcase
         pass #delete this line and replace with your code here
 
 class PlaintextMessage(Message):
