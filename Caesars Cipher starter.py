@@ -102,6 +102,17 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
+        dict = {}
+        len_l = len(string.ascii_lowercase)
+        len_u = len(string.ascii_uppercase)
+        lower = string.ascii_lowercase
+        upper = string.ascii_uppercase
+        # print(string.ascii_lowercase)
+        # print(string.ascii_uppercase)
+        
+        for i in range(len_l):
+            dict[lower[i]] = lower[i + shift]
+        print(dict)
         pass #delete this line and replace with your code here
 
     def apply_shift(self, shift):
@@ -116,20 +127,44 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        def build_shift_dict(self, shift)
-            dict = {}
-            len_l = len(string.ascii_lowercase)
-            len_u = len(string.ascii_uppercase)
-            lower = string.ascii_lowercase
-            upper = string.ascii_uppercase
-            # print(string.ascii_lowercase)
-            # print(string.ascii_uppercase)
+        s = ' '
+        
+        for letter in self.message_text:
+            if letter.islower() or letter.isupper():
+                self.build_shift_dict(letter, shift)
+        
+        
+        # pass #delete this line and replace with your code here
+        
+        
             
-            for i in range(len_l):
-                dict[lower[i]] = lower[i + shift]
-            print(dict)
-        #repeat for UPPERcase
-        pass #delete this line and replace with your code here
+        """
+        s = ' '
+        for letter in self.message_text:
+            if letter.islower() or letter.isupper():
+            shift letter
+            1) call self.build_shift_dict
+            2) lookup letter in dict
+            3) replace letter with shifted letter
+                    
+            s += letter
+            otherwise donot do any thing
+                
+            s+= letter
+                    
+            check for punctuation
+            if letter in stringpunctuation
+            or letter in string.digits
+                
+         """
+            
+m = Message('happy')
+d = m.build_shift_dict(3)
+print(d)
+
+shifted_text = m.apply_shift(3)
+print(shifted_text)
+    
 
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
