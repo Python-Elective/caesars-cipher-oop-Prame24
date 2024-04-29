@@ -110,10 +110,13 @@ class Message(object):
         # print(string.ascii_lowercase)
         # print(string.ascii_uppercase)
         
+        
         for i in range(len_l):
-            dict[lower[i]] = lower[i + shift]
-        print(dict)
-        pass #delete this line and replace with your code here
+            dict[lower[i]] = lower[(i + shift) % len_l]
+            dict[upper[i]] = upper[(i+shift) % len_u]
+        return dict
+
+
 
     def apply_shift(self, shift):
         '''
@@ -129,9 +132,19 @@ class Message(object):
         '''
         s = ' '
         
+        self.build_shift_dict(shift)
+        
         for letter in self.message_text:
             if letter.islower() or letter.isupper():
-                self.build_shift_dict(letter, shift)
+                s += self.build_shift_dict(shift)[letter]
+            elif letter in string.punctuation or string.digits or (' '):
+                s += letter
+                
+        return s
+            
+
+                
+
         
         
         # pass #delete this line and replace with your code here
@@ -158,7 +171,7 @@ class Message(object):
                 
          """
             
-m = Message('happy')
+m = Message('happy???') # expect kdssb
 d = m.build_shift_dict(3)
 print(d)
 
