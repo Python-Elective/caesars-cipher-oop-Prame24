@@ -171,12 +171,12 @@ class Message(object):
                 
          """
             
-m = Message('happy???') # expect kdssb
-d = m.build_shift_dict(3)
-print(d)
+# m = Message('happy???') # expect kdssb
+# d = m.build_shift_dict(3)
+# print(d)
 
-shifted_text = m.apply_shift(3)
-print(shifted_text)
+# shifted_text = m.apply_shift(3)
+# print(shifted_text)
     
 
 class PlaintextMessage(Message):
@@ -197,7 +197,12 @@ class PlaintextMessage(Message):
         Hint: consider using the parent class constructor so less 
         code is repeated
         '''
-        pass #delete this line and replace with your code here
+        super().__init__(self.text)
+        self.shift = shift
+        self.encrypting_dict = self.build_shift_dict(shift)
+        self.message_text_encrypted = self.apply_shift(shift)
+        
+        
 
     def get_shift(self):
         '''
@@ -205,7 +210,7 @@ class PlaintextMessage(Message):
         
         Returns: self.shift
         '''
-        pass #delete this line and replace with your code here
+        return self.shift
 
     def get_encrypting_dict(self):
         '''
@@ -213,7 +218,9 @@ class PlaintextMessage(Message):
         
         Returns: a COPY of self.encrypting_dict
         '''
-        pass #delete this line and replace with your code here
+        # use .copy()
+        x = self.encrypting_dict.copy()
+        return x
 
     def get_message_text_encrypted(self):
         '''
@@ -221,7 +228,7 @@ class PlaintextMessage(Message):
         
         Returns: self.message_text_encrypted
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text_encrypted
 
     def change_shift(self, shift):
         '''
@@ -234,7 +241,17 @@ class PlaintextMessage(Message):
 
         Returns: nothing
         '''
-        pass #delete this line and replace with your code here
+        self.shift = shift
+        self.update = self.encrypting_dict(shift)
+        self.apply_shift(shift)
+        # rebuild/update self.encryptingdict using self.build.......
+        # apply new shift using self.apply......
+        
+#test case
+p = PlaintextMessage('Happy ???', 3)
+print(p.get_message_text_encrypted())
+p.change_shift(4)
+print(p.get_message_text_encrypted())
 
 class CiphertextMessage(Message):
     def __init__(self, text):
