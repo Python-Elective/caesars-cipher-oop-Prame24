@@ -197,7 +197,7 @@ class PlaintextMessage(Message):
         Hint: consider using the parent class constructor so less 
         code is repeated
         '''
-        super().__init__(self.text)
+        super().__init__(text)
         self.shift = shift
         self.encrypting_dict = self.build_shift_dict(shift)
         self.message_text_encrypted = self.apply_shift(shift)
@@ -242,7 +242,7 @@ class PlaintextMessage(Message):
         Returns: nothing
         '''
         self.shift = shift
-        self.update = self.encrypting_dict(shift)
+        self.update = self.encrypting_dict
         self.apply_shift(shift)
         # rebuild/update self.encryptingdict using self.build.......
         # apply new shift using self.apply......
@@ -264,7 +264,8 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        self.message_text = text
+        self.valid_words = WORDLIST_FILENAME
 
     def decrypt_message(self):
         '''
@@ -282,7 +283,21 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        pass #delete this line and replace with your code here
+        #brute force method
+        #try apply_shift(1), (2), (3)
+        #count how many english word can be found
+        #return(best_shift, Message)
+        max_letter = 0
+        attempt = 0
+        for i in range(26):
+            count = 0
+            for letter in self.apply_shift(i):
+                if letter in WORDLIST_FILENAME:
+                    count += 1
+            if count > max_letter:
+                max_letter = count
+                attempt = i
+        return PlaintextMessage(Message).get_message_text_encrypted()
 
 
 if __name__ == '__main__':
