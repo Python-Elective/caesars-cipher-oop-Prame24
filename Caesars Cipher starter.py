@@ -131,7 +131,6 @@ class Message(object):
              down the alphabet by the input shift
         '''
         s = ' '
-        
         self.build_shift_dict(shift)
         
         for letter in self.message_text:
@@ -287,17 +286,22 @@ class CiphertextMessage(Message):
         #try apply_shift(1), (2), (3)
         #count how many english word can be found
         #return(best_shift, Message)
+        best = ()
         max_letter = 0
-        attempt = 0
+        best_shift = 0
+        best_word = ''
         for i in range(26):
             count = 0
-            for letter in self.apply_shift(i):
-                if letter in WORDLIST_FILENAME:
+            shift_word = self.apply_shift(i)
+            for word in shift_word.split():
+                if word.lower() in self.valid_words:
                     count += 1
             if count > max_letter:
                 max_letter = count
-                attempt = i
-        return PlaintextMessage(Message).get_message_text_encrypted()
+                best_shift = i
+                best_word = shift_word
+        best = (best_shift, best_word)
+        return best
 
 
 if __name__ == '__main__':
