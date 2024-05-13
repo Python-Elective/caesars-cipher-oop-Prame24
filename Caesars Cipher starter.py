@@ -264,7 +264,7 @@ class CiphertextMessage(Message):
             self.valid_words (list, determined using helper function load_words)
         '''
         self.message_text = text
-        self.valid_words = WORDLIST_FILENAME
+        self.valid_words = load_words(WORDLIST_FILENAME)
 
     def decrypt_message(self):
         '''
@@ -290,11 +290,11 @@ class CiphertextMessage(Message):
         max_letter = 0
         best_shift = 0
         best_word = ''
-        for i in range(26):
+        for i in range(1, 26):
             count = 0
             shift_word = self.apply_shift(i)
-            for word in shift_word.split():
-                if word.lower() in self.valid_words:
+            for word in shift_word.split(' '):
+                if is_word(self.valid_words, word):
                     count += 1
             if count > max_letter:
                 max_letter = count
