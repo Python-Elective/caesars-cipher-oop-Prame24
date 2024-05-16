@@ -241,8 +241,8 @@ class PlaintextMessage(Message):
         Returns: nothing
         '''
         self.shift = shift
-        self.update = self.encrypting_dict
-        self.apply_shift(shift)
+        self.encrypting_dict = self.build_shift_dict(shift)
+        self.message_text_encrypted = self.apply_shift(shift)
         # rebuild/update self.encryptingdict using self.build.......
         # apply new shift using self.apply......
         
@@ -263,8 +263,7 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        self.message_text = text
-        self.valid_words = load_words(WORDLIST_FILENAME)
+        super().__init__(text)
 
     def decrypt_message(self):
         '''
@@ -287,7 +286,7 @@ class CiphertextMessage(Message):
         #count how many english word can be found
         #return(best_shift, Message)
         best = ()
-        max_letter = 0
+        max_word = 0
         best_shift = 0
         best_word = ''
         for i in range(1, 26):
@@ -296,8 +295,8 @@ class CiphertextMessage(Message):
             for word in shift_word.split(' '):
                 if is_word(self.valid_words, word):
                     count += 1
-            if count > max_letter:
-                max_letter = count
+            if count > max_word:
+                max_word = count
                 best_shift = i
                 best_word = shift_word
         best = (best_shift, best_word)
